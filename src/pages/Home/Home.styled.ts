@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
-export const banainhas123 = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -21,13 +22,7 @@ export const SearchBar = styled.input`
   padding-left: 10px;
 `;
 
-export const SearchButton = styled.button`
+export const SearchButton = styled(Link)`
   width: 80px;
   height: 30px;
 `;
-
-export const ResultsList = styled.ul`
-padding: 30px;
-`;
-
-export const Results = styled.li``;

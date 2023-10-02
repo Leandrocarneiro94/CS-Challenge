@@ -1,28 +1,23 @@
-import { Container, SearchButton, SearchBar, SearchWrapper, ResultsList, Results } from './Home.styled'
+import { Container, SearchButton, SearchBar, SearchWrapper } from './Home.styled'
+import React from "react"
 
-type lista = [
-    {
-        nome: string;
-        id: string;
-    },
-    {
+const Home = (): JSX.Element => {
+    
+    const [searchTerm, setSearchTerm] = React.useState('')
 
-    },
-]
-
-function Home() {
-  
   return (
     <Container>
       <SearchWrapper>
-        <SearchBar type="text" placeholder="Pesquisar"/>
-        <SearchButton type="submit">
+        <SearchBar 
+          type="text" 
+          placeholder="Pesquisar" 
+          value={searchTerm} 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+        />
+        <SearchButton to={`/users/${searchTerm}`}>
           Pesquisar
         </SearchButton>
       </SearchWrapper>
-      <ResultsList>
-        <Results>oi</Results>
-      </ResultsList>
     </Container>
   )
 }
