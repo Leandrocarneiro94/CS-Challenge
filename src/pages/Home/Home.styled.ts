@@ -16,7 +16,7 @@ export const SearchWrapper = styled.header`
   justify-content: center;
 `;
 
-export const SearchBar = styled.input`
+export const SearchField = styled.input`
   width: 400px;
   height: 30px;
   padding-left: 10px;

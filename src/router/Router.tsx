@@ -10,8 +10,16 @@ const Router = () => (
                 element={<Home/>}
             />
             <Route
-                path="/users/:id"
+                path="/users/:username"
                 element={<User/>}
+            />
+            <Route
+                path="/user/:username/repos"
+                element={<p>oi</p>}
+            />
+            <Route
+                path="*"
+                element={<p>Não foi possível concluir sua busca, tente novamente</p>}
             />
         </Routes>
     </BrowserRouter>

@@ -11,8 +11,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: none;
     font-family: "Inter",sans-serif;
-    height: 100%;
-    width: 100%;
   }
 
   body {
