@@ -8,16 +8,16 @@ const Home = () => {
     <Container>
       <SearchWrapper>
         <SearchField 
-          onChange={(e) => setSearchTerm(e.target.value)}
           type="text" 
-          placeholder="Pesquisar Usuário" 
+          placeholder="Nome de usuário" 
           value={searchTerm} 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+          autoFocus
         />
 
         <SearchButton to={`/users/${searchTerm}`}>
           Pesquisar
         </SearchButton>
-
       </SearchWrapper>
     </Container>
   )
