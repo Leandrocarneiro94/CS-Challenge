@@ -7,22 +7,27 @@ export const Container = styled.div`
 `;
 
 export const SearchWrapper = styled.header`
-  width: 100%;
-  background-color: grey;
-  height: 150px;
-  display: flex;
-  gap: 10px;
   align-items: center;
+  background-color: grey;
+  display: flex;
+  gap: 0.625rem;
+  height: 9.375rem;
   justify-content: center;
+  width: 100vw;
 `;
 
 export const SearchField = styled.input`
-  width: 400px;
-  height: 30px;
-  padding-left: 10px;
+  background: lightgrey;
+  border-color: black;
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-width: 0.0625rem;
+  font-size: 1.25rem;
+  height: 3.125rem;
+  padding-left: 1.25rem;
+  width: 31.25rem;
 `;
 
 export const SearchButton = styled(Link)`
-  width: 80px;
-  height: 30px;
+font-size:1.25rem;
 `;

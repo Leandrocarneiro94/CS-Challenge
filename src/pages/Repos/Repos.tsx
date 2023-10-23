@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom"
 import { useEffect, useState } from 'react';
-import { Container, ButtonWrapper, RepoWrapper, StarButton, LinkVoltar } from "./Repos.styled";
+import { Container, Title, FilterContainer, FilterWrapper } from "./Repos.styled.ts";
 
 const url = 'https://api.github.com/';
 
@@ -11,7 +11,7 @@ type Repository = {
 };
 
 const Repos = () => {
-  const {id} = useParams()
+  const {username} = useParams()
 
   const [repos, setRepos] = useState<Repository[]>([]);
 
@@ -19,7 +19,7 @@ const Repos = () => {
 
   useEffect(() => {
     const getRepos = async () => {
-      const resposta = await fetch(`${url}users/${id}/repos`);
+      const resposta = await fetch(`${url}users/${username}/repos`);
 
       const dados: Repository[] = await resposta.json();
 
@@ -27,53 +27,48 @@ const Repos = () => {
       if (ordenacao === 'asc') {
           reposOrdenados.sort((a, b) => a.stargazers_count - b.stargazers_count);
           } else {
-              reposOrdenados.sort((a, b) => b.stargazers_count - a.stargazers_count);
+            reposOrdenados.sort((a, b) => b.stargazers_count - a.stargazers_count);
           }
 
-      console.log(reposOrdenados);
-
       setRepos(reposOrdenados);
-      console.log(reposOrdenados);
     };
 
     getRepos();
-  }, [id, ordenacao]);
+  }, [username, ordenacao]);
 
     const handleOrdernar = (ordem: 'asc' | 'desc') => {
         setOrdenacao(ordem);
     };
 
-    return (
-      <Container>
-          <p>Repositórios:</p>
-          <ButtonWrapper>
-              <p>Ordenar:</p>
-              <StarButton>
-                  <button onClick={() => handleOrdernar('asc')}>
-                      Ordem ascendente de estrelas
-                  </button>
-                  <button onClick={() => handleOrdernar('desc')}>
-                      Ordem Decrescente de Estrelas
-                  </button>
-              </StarButton>
-          </ButtonWrapper>
-          <RepoWrapper>
-              {repos.map((repo) => (
-                  <li key={repo.id}>
-                      <Link to={`/users/${id}/repos/${repo.name}`}>
-                          {repo.name} - &#9733; {repo.stargazers_count} (<u>Ver detalhes</u>)
-                      </Link>
-                  </li>
-              ))}
-              
-          </RepoWrapper>
-          <LinkVoltar>
-              <Link to={`/users/${id}`}>
-                  <p>Voltar</p>
-              </Link>
-          </LinkVoltar>
-      </Container>
-    )
+  return (
+    <Container>
+      <Title>Repositories</Title>
+
+      <FilterContainer>
+          <p>Filter by Stars:</p>
+
+          <FilterWrapper>
+              <button onClick={() => handleOrdernar('asc')}>
+                Ascending Order 
+              </button>
+
+              <button onClick={() => handleOrdernar('desc')}>
+                Descending Order
+              </button>
+          </FilterWrapper>
+      </FilterContainer>
+
+      {repos.map((repo) => (
+        <Link to={`/users/${username}/repos/${repo.name}`}>
+            {repo.name} &#9733; {repo.stargazers_count}
+        </Link>
+      ))}           
+
+      <Link to={`/users/${username}`}>
+        <p>Back to User</p>
+      </Link>
+    </Container>
+  )
 }
 
 export default Repos;

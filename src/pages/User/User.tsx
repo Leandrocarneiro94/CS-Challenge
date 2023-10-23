@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
-import {Avatar, Results, UserInfo, UserInfoContainer, LinkRepo, LinkVoltar, LinkWrapper, NotFoundText, UserNotFound} from './User.styled'
+import { Results, UserInfo, Avatar, UserNotFound } from './User.styled'
 
 const url = 'https://api.github.com/users';
 
@@ -27,12 +27,10 @@ const User = () => {
         loadUser()
     }, [])
 
-    // -----------------------------------------------------
-
     const [userCheck, setUserCheck] = useState(true);
 
     useEffect(() => {
-        const getUsers = async () => {
+        const loadUsers = async () => {
             const resposta = await fetch(`${url}/${username}`);
             if (resposta.status === 404) {
                 setUserCheck(false);
@@ -42,20 +40,17 @@ const User = () => {
             }
         }
 
-        getUsers();
-    },[])
-
-    // -----------------------------------------------------
+        loadUsers();
+    }, [])
 
     return (
         <Results>
-            <UserInfoContainer>
                 {userCheck ? (
-                    <>                        
-                        <Avatar src={user?.avatar_url}/>
-
+                    <>                
                         <UserInfo>
-                            <p>User: {username}</p>
+                            <Avatar src={user?.avatar_url}/>
+
+                            <p>User: {user?.name}</p>
 
                             <p>Followers: {user?.followers}</p>
 
@@ -64,70 +59,35 @@ const User = () => {
                             {user?.email ? (
                                 <p>E-mail: {user?.email}</p>
                                 ) : (
-                                    <NotFoundText>E-mail: Não encontrado </NotFoundText>
+                                    <p>E-mail: Not found </p>
                                 )}
 
                             {user?.bio ? (
                                 <p>Bio: {user?.bio}</p>
                                 ) : (
-                                    <NotFoundText>Bio: Não encontrado </NotFoundText>
+                                    <p>Bio: Not found </p>
                                 )}
 
-                            <LinkWrapper>
-                                <LinkRepo>  
-                                    <Link to={`/users/${username}/repos`}>
-                                        <p>Ver Repositórios</p>
-                                    </Link>
-                                </LinkRepo>
+                            <Link to={`/users/${username}/repos`}>
+                                <p>Repositories</p>
+                            </Link>
 
-                                <LinkVoltar>
-                                    <Link to='/'>
-                                        Voltar
-                                    </Link>
-                                </LinkVoltar>
-                            </LinkWrapper>                    
+                            <Link to='/'>
+                                Back to Home
+                            </Link>                 
                         </UserInfo>
                     </>
                 ) : (
                     <UserNotFound>
-                        <p>O usuário não foi encontrado.</p>
+                        <p>User not found.</p>
 
-                        <LinkVoltar>
-                            <Link to='/'>
-                                Voltar
-                            </Link>
-                        </LinkVoltar>
+                        <Link to='/'>
+                            Back to Home
+                        </Link>
                     </UserNotFound>
                 )}
-            </UserInfoContainer>
         </Results>
     );
 }
-    
-//     return (
-//         <Results>
-//             <Link to="/">
-//                 Voltar
-//             </Link>
-
-//             <Avatar src={user?.avatar_url}/>
-
-//             <p>User: {user?.name}</p>
-
-//             <p>Bio: {user?.bio}</p>
-
-//             <p>E-mail: {user?.email}</p>
-
-//             <p>Followers: {user?.followers}</p>
-
-//             <p>Following: {user?.following}</p>
-
-//         	<Link to={`/users/${username}/repos`}>
-//                 <p>Lista de Repositórios</p>
-//             </Link>
-
-//         </Results>
-//     )
-// }
 
 export default User

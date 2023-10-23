@@ -1,56 +1,38 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+    background-color: transparent;
     display: flex;
     flex-direction: column;
+    font-size: 1.5625rem;
+    gap: 2rem;
+    height: 100vh;
+    list-style: none;
+    padding: 2rem;
+`;
+
+export const Title = styled.h1`
+    font-size: 1.875rem;
+`
+
+export const FilterContainer = styled.div`
     align-items: center;
-    font-size: 40px;
-    gap: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-    padding: 30px;
-
-`;
-
-export const ButtonWrapper = styled.div`
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-size: 20px;
-    gap: 10px;
-`;
-
-export const StarButton = styled.div`
-    display: flex;
-    flex-direction: center;
-    gap: 10px;
-    
-    button {
-        padding: 5px 10px;
-        font-size: 16px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-        background-color: var(--light-grey);
-      }
-`;
-
-export const RepoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    font-size: 20px;
-    gap: 10px;
+    font-size: 1.25rem;
+    gap: 2rem;
     list-style: none;
 `;
 
-export const LinkVoltar = styled.div`
+export const FilterWrapper = styled.div`
     display: flex;
-    align-items: center;
-    background-color: var(--light-grey);
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    height: 20px;
-    width: 110px;
-    padding: 27px;
-    font-size: 20px;
+    flex-direction: center;
+    gap: 0.625rem;
+    
+    button {
+        background-color: transparent;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        font-size: 1.125rem;
+        padding: 0.3125rem 0.625rem;
+    }
 `;

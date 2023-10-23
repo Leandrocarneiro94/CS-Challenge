@@ -1,4 +1,4 @@
-import { Container, SearchButton, SearchField, SearchWrapper } from './Home.styled'
+import { Container, SearchWrapper, SearchField, SearchButton  } from './Home.styled'
 import React from "react"
 
 const Home = () => {    
@@ -9,14 +9,14 @@ const Home = () => {
       <SearchWrapper>
         <SearchField 
           type="text" 
-          placeholder="Nome de usuário" 
+          placeholder="Username" 
           value={searchTerm} 
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
           autoFocus
         />
 
         <SearchButton to={`/users/${searchTerm}`}>
-          Pesquisar
+          <p>Estou com sorte</p>
         </SearchButton>
       </SearchWrapper>
     </Container>
