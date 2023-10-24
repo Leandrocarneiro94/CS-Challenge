@@ -25,20 +25,16 @@ const Repos = () => {
 
       const reposOrdenados = [...dados];
       if (ordenacao === 'asc') {
-          reposOrdenados.sort((a, b) => a.stargazers_count - b.stargazers_count);
-          } else {
-            reposOrdenados.sort((a, b) => b.stargazers_count - a.stargazers_count);
-          }
+        reposOrdenados.sort((a, b) => a.stargazers_count - b.stargazers_count);
+      } else {
+        reposOrdenados.sort((a, b) => b.stargazers_count - a.stargazers_count);
+      }
 
       setRepos(reposOrdenados);
     };
 
     getRepos();
   }, [username, ordenacao]);
-
-    const handleOrdernar = (ordem: 'asc' | 'desc') => {
-        setOrdenacao(ordem);
-    };
 
   return (
     <Container>
@@ -48,11 +44,11 @@ const Repos = () => {
           <p>Filter by Stars:</p>
 
           <FilterWrapper>
-              <button onClick={() => handleOrdernar('asc')}>
+              <button onClick={() => setOrdenacao('asc')}>
                 Ascending Order 
               </button>
 
-              <button onClick={() => handleOrdernar('desc')}>
+              <button onClick={() => setOrdenacao('desc')}>
                 Descending Order
               </button>
           </FilterWrapper>
@@ -65,7 +61,7 @@ const Repos = () => {
       ))}           
 
       <Link to={`/users/${username}`}>
-        <p>Back to User</p>
+        Back to User
       </Link>
     </Container>
   )

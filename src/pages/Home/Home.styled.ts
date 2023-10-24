@@ -29,5 +29,5 @@ export const SearchField = styled.input`
 `;
 
 export const SearchButton = styled(Link)`
-font-size:1.25rem;
+  font-size:1.25rem;
 `;
