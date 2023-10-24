@@ -31,21 +31,13 @@ const RepoDetails = () => {
 
         <p>Name: {repoDetails.name}</p>
 
-        {repoDetails.description ? (
-            <p>Description: {repoDetails.description}</p>
-            ) : (
-            <p>Description: Not Found</p>
-        )}
+        <p>Description: {repoDetails.description || 'Not found'}</p>
 
-        {repoDetails.language ? (
-            <p>Language: {repoDetails.language}</p>
-                ) : (
-            <p>Language: Not Found</p>
-        )}
+        <p>Language: {repoDetails.language || 'Not found'}</p>
 
-            <p>&#9733;: {repoDetails.stargazers_count}</p>
+        <p>&#9733;: {repoDetails.stargazers_count}</p>
 
-        <Link to={repoDetails.html_url}> Github</Link>
+        <a href={repoDetails.html_url} target='_blank'> Github</a>
 
         <Link to={`/users/${username}/repos`}>
             Back to Repositories

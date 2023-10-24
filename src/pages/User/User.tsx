@@ -17,75 +17,58 @@ const User = () => {
         repos_url: string,
     }>()
 
-    useEffect(() => {
-        const loadUser = async () => {
-            const response = await fetch(`${url}/${username}`)
-            const dados = await response.json()
-            setUser(dados)
-        }
-
-        loadUser()
-    }, [])
-
-    const [userCheck, setUserCheck] = useState(true);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const loadUsers = async () => {
             const resposta = await fetch(`${url}/${username}`);
-            if (resposta.status === 404) {
-                setUserCheck(false);
-            } else {
+            if(resposta.ok) {
                 const dados = await resposta.json();
                 setUser(dados);
             }
+            setIsLoading(false)
         }
 
         loadUsers();
-    }, [])
+    }, [username])
 
     return (
         <Results>
-                {userCheck ? (
-                    <>                
-                        <UserInfo>
-                            <Avatar src={user?.avatar_url}/>
+            {isLoading && <p>Carregando...</p>}
 
-                            <p>User: {user?.name}</p>
+            {!user && !isLoading && (
+                <UserNotFound>
+                    <p>User not found.</p>
 
-                            <p>Followers: {user?.followers}</p>
+                    <Link to='/'>
+                        Back to Home
+                    </Link>
+                </UserNotFound>
+            )}
 
-                            <p>Following: {user?.following}</p>
-                            
-                            {user?.email ? (
-                                <p>E-mail: {user?.email}</p>
-                                ) : (
-                                    <p>E-mail: Not found </p>
-                                )}
+            {user && (
+                <UserInfo>
+                    <Avatar src={user.avatar_url}/>
 
-                            {user?.bio ? (
-                                <p>Bio: {user?.bio}</p>
-                                ) : (
-                                    <p>Bio: Not found </p>
-                                )}
+                    <p>User: {user.name}</p>
 
-                            <Link to={`/users/${username}/repos`}>
-                                <p>Repositories</p>
-                            </Link>
+                    <p>Followers: {user.followers}</p>
 
-                            <Link to='/'>
-                                Back to Home
-                            </Link>                 
-                        </UserInfo>
-                    </>
-                ) : (
-                    <UserNotFound>
-                        <p>User not found.</p>
+                    <p>Following: {user.following}</p>
+                    
+                    <p>E-mail: {user.email || 'Not found'}</p>
 
-                        <Link to='/'>
-                            Back to Home
-                        </Link>
-                    </UserNotFound>
-                )}
+                    <p>Bio: {user.bio || 'Not found'}</p>
+
+                    <Link to={`/users/${username}/repos`}>
+                        Repositories
+                    </Link>
+
+                    <Link to='/'>
+                        Back to Home
+                    </Link>                 
+                </UserInfo>
+            )}
         </Results>
     );
 }

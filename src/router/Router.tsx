@@ -21,7 +21,7 @@ const Router = () => (
                 path="/users/:username/repos"
                 element={<Repos />}
             />
-                
+
             <Route
                 path="/users/:username/repos/:repoId"
                 element={<ReposDetails />}
