@@ -1,19 +1,20 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Container, Title } from "./ReposDetails.styled";
+import { url } from '../../constants';
 
-const url = 'https://api.github.com/';
+type RepoData = {
+  name: string,
+  description: string,
+  stargazers_count: number,
+  html_url: string,
+  language: string,
+}
 
 const RepoDetails = () => {
   const { username, repoId } = useParams();
 
-  const [repoDetails, setRepoDetails] = useState({
-    name: '',
-    description: '',
-    stargazers_count: 0,
-    html_url: '',
-    language: '',
-  });
+  const [repoDetails, setRepoDetails] = useState<RepoData>();
 
   useEffect(() => {
     const fetchRepoDetails = async () => {
@@ -29,23 +30,15 @@ const RepoDetails = () => {
     <Container>
         <Title>Repository Details</Title>
 
-        <p>Name: {repoDetails.name}</p>
+        <p>Name: {repoDetails?.name}</p>
 
-        {repoDetails.description ? (
-            <p>Description: {repoDetails.description}</p>
-            ) : (
-            <p>Description: Not Found</p>
-        )}
+        <p>Description: {repoDetails?.description || 'Not found'}</p>
 
-        {repoDetails.language ? (
-            <p>Language: {repoDetails.language}</p>
-                ) : (
-            <p>Language: Not Found</p>
-        )}
+        <p>Language: {repoDetails?.language || 'Not Found'}</p>
+              
+        <p>&#9733; {repoDetails?.stargazers_count}</p>
 
-            <p>&#9733;: {repoDetails.stargazers_count}</p>
-
-        <Link to={repoDetails.html_url}> Github</Link>
+        <a target='blank' href={repoDetails?.html_url}> Github</a>
 
         <Link to={`/users/${username}/repos`}>
             Back to Repositories

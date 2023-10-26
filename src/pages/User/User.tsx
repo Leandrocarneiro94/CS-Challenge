@@ -1,91 +1,75 @@
 import { useParams, Link } from "react-router-dom"
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Results, UserInfo, Avatar, UserNotFound } from './User.styled'
+import { url }  from '../../constants'
 
-const url = 'https://api.github.com/users';
+type UserData = {
+    name: string, 
+    avatar_url: string, 
+    followers: number, 
+    following: number, 
+    email: string, 
+    bio: string,
+    repos_url: string,
+};
 
 const User = () => {
     const {username} = useParams();
 
-    const [user, setUser] = React.useState<{ 
-        name: string, 
-        avatar_url: string, 
-        followers: number, 
-        following: number, 
-        email: string, 
-        bio: string,
-        repos_url: string,
-    }>()
+    const [user, setUser] = useState<UserData>();
 
-    useEffect(() => {
-        const loadUser = async () => {
-            const response = await fetch(`${url}/${username}`)
-            const dados = await response.json()
-            setUser(dados)
-        }
-
-        loadUser()
-    }, [])
-
-    const [userCheck, setUserCheck] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadUsers = async () => {
-            const resposta = await fetch(`${url}/${username}`);
-            if (resposta.status === 404) {
-                setUserCheck(false);
-            } else {
+            const resposta = await fetch(`${url}users/${username}`);
+            if (resposta.ok) {
                 const dados = await resposta.json();
                 setUser(dados);
             }
+            setIsLoading(false)
         }
 
         loadUsers();
-    }, [])
+    }, [username])
 
     return (
         <Results>
-                {userCheck ? (
-                    <>                
-                        <UserInfo>
-                            <Avatar src={user?.avatar_url}/>
+            {isLoading && <p>Carregando...</p>}
 
-                            <p>User: {user?.name}</p>
+            {!user && !isLoading && (
+                <UserNotFound>
+                    <p>User not found.</p>
 
-                            <p>Followers: {user?.followers}</p>
+                    <Link to='/'>
+                        Back to Home
+                    </Link>
+                </UserNotFound>
+            )}     
 
-                            <p>Following: {user?.following}</p>
-                            
-                            {user?.email ? (
-                                <p>E-mail: {user?.email}</p>
-                                ) : (
-                                    <p>E-mail: Not found </p>
-                                )}
+            {user && (
+                <UserInfo>
+                    <Avatar src={user.avatar_url}/>
 
-                            {user?.bio ? (
-                                <p>Bio: {user?.bio}</p>
-                                ) : (
-                                    <p>Bio: Not found </p>
-                                )}
+                    <p>User: {user.name}</p>
 
-                            <Link to={`/users/${username}/repos`}>
-                                <p>Repositories</p>
-                            </Link>
+                    <p>Followers: {user.followers}</p>
 
-                            <Link to='/'>
-                                Back to Home
-                            </Link>                 
-                        </UserInfo>
-                    </>
-                ) : (
-                    <UserNotFound>
-                        <p>User not found.</p>
+                    <p>Following: {user.following}</p>
 
-                        <Link to='/'>
-                            Back to Home
-                        </Link>
-                    </UserNotFound>
-                )}
+                    <p>E-mail: {user.email || 'Not found'}</p>
+
+                    <p>Bio: {user.bio || 'Not found'}</p>
+
+                    <Link to={`/users/${username}/repos`}>
+                        Repositories
+                    </Link>
+
+                    <Link to='/'>
+                        Back to Home
+                    </Link>                 
+                </UserInfo>
+            )} 
         </Results>
     );
 }

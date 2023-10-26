@@ -1,8 +1,7 @@
 import { useParams, Link } from "react-router-dom"
 import { useEffect, useState } from 'react';
 import { Container, Title, FilterContainer, FilterWrapper } from "./Repos.styled.ts";
-
-const url = 'https://api.github.com/';
+import { url } from '../../constants';
 
 type Repository = {
   id: number;
@@ -36,9 +35,9 @@ const Repos = () => {
     getRepos();
   }, [username, ordenacao]);
 
-    const handleOrdernar = (ordem: 'asc' | 'desc') => {
-        setOrdenacao(ordem);
-    };
+  const handleOrdernar = (ordem: 'asc' | 'desc') => {
+    setOrdenacao(ordem);
+  };
 
   return (
     <Container>
@@ -65,7 +64,7 @@ const Repos = () => {
       ))}           
 
       <Link to={`/users/${username}`}>
-        <p>Back to User</p>
+        Back to User
       </Link>
     </Container>
   )
